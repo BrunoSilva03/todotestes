@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TasksCollection } from '../api/TasksCollection';
 
-export const TaskForm = () => {
-    const [text, setText] = useState("");
+export const TaskForm = ({ user }) => {
+    const [text, setText] = useState('');
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -11,14 +11,15 @@ export const TaskForm = () => {
 
         TasksCollection.insert({
             text: text.trim(),
-            createdAt: new Date()
+            createdAt: new Date(),
+            userId: user._id
         });
 
-        setText("");
+        setText('');
     };
 
     return (
-        <form className="task-form">
+        <form className="task-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Type to add new tasks"
